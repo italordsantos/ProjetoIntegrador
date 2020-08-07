@@ -7,6 +7,8 @@ package visao;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
  *
@@ -64,6 +66,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Proprietario");
 
+        jList1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -223,6 +226,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 new Proprietario().setVisible(true);
             }
         }
+        if ((evt.getModifiers() & MouseEvent.BUTTON3_MASK) != 0) {
+                JPopupMenu menu = new JPopupMenu();
+                add(menu);
+                
+                JPopupMenu menu1 = new JPopupMenu();
+                add(menu1);
+                
+                JMenuItem item = new JMenuItem("Item 1");
+                menu.add(item);
+                menu.add(menu1);
+                JMenuItem item2 = new JMenuItem("Item2");
+                menu.add(item2);
+                menu.show(menu, evt.getX(), evt.getY()+75);
+
+            }
     }//GEN-LAST:event_jList1MouseClicked
 
     /**
