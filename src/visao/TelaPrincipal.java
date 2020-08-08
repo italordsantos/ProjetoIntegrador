@@ -5,8 +5,10 @@
  */
 package visao;
 
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -16,11 +18,29 @@ import javax.swing.JPopupMenu;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
 
+    final ArrayList<String> teste = new ArrayList<>();
+
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
         initComponents();
+        init();
+    }
+
+    public void init() {
+        teste.add("bili");
+        teste.add("lulu");
+        teste.add("caramelo");
+        teste.add("outro animal");
+        teste.add("zhym");
+
+        DefaultListModel a = new DefaultListModel();
+        for (String ss : teste) {
+            a.addElement(ss);
+        }
+
+        jList1.setModel(a);
     }
 
     /**
@@ -38,6 +58,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jRadioButton2 = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -58,6 +80,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setSelected(true);
@@ -67,20 +94,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jRadioButton2.setText("Proprietario");
 
         jList1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jList1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jList1MouseClicked(evt);
             }
         });
+        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList1ValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(jList1);
+
+        jLabel1.setText("jLabel1");
+
+        jButton1.setText("jButton1");
 
         jMenu1.setText("Animal");
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItem2.setText("Abrir tela");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +126,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu2.setText("Proprietario");
 
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItem3.setText("Abrir tela");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,16 +188,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jRadioButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jRadioButton2))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jRadioButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton2))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(jLabel1)
+                        .addGap(29, 29, 29)
+                        .addComponent(jButton1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +217,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(jRadioButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
@@ -221,27 +266,76 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             if (jRadioButton1.isSelected()) {
-                new Animal().setVisible(true);
+                Animal a = new Animal();
+                a.setAlgo(jList1.getSelectedValue());
+                a.setVisible(true);
             } else {
                 new Proprietario().setVisible(true);
             }
         }
-        if ((evt.getModifiers() & MouseEvent.BUTTON3_MASK) != 0) {
-                JPopupMenu menu = new JPopupMenu();
-                add(menu);
-                
-                JPopupMenu menu1 = new JPopupMenu();
-                add(menu1);
-                
-                JMenuItem item = new JMenuItem("Item 1");
-                menu.add(item);
-                menu.add(menu1);
-                JMenuItem item2 = new JMenuItem("Item2");
-                menu.add(item2);
-                menu.show(menu, evt.getX(), evt.getY()+75);
+        if (evt.getButton() == MouseEvent.BUTTON3
+                && !jList1.isSelectionEmpty()) {
+            System.out.println("karol S2");
+            JPopupMenu menu = new JPopupMenu();
+            add(menu);
 
-            }
+            JPopupMenu menu1 = new JPopupMenu();
+            add(menu1);
+
+            JMenuItem item = new JMenuItem("Informações");
+            menu.add(item);
+            menu.add(menu1);
+            JMenuItem item2 = new JMenuItem("Nova vacina");
+            menu.add(item2);
+            JMenuItem item3 = new JMenuItem("Nova cirurgia");
+            menu.add(item3);
+            JMenuItem item4 = new JMenuItem("Nova consulta");
+            menu.add(item4);
+            menu.show(menu, evt.getX(), evt.getY() + 75);
+            menu.addSeparator();
+            JMenu subMenu = new JMenu("Sub menu");
+            subMenu.add(new JMenuItem("Sub 1"));
+            subMenu.add(new JMenuItem("Sub 2"));
+            menu.add(subMenu);
+
+        }
+        //        if ((evt.getModifiers() & MouseEvent.BUTTON3_MASK) != 0) {
+        //                JPopupMenu menu = new JPopupMenu();
+        //                add(menu);
+        //                
+        //                JPopupMenu menu1 = new JPopupMenu();
+        //                add(menu1);
+        //                
+        //                JMenuItem item = new JMenuItem("Informações");
+        //                menu.add(item);
+        //                menu.add(menu1);
+        //                JMenuItem item2 = new JMenuItem("Nova vacina");
+        //                menu.add(item2);
+        //                JMenuItem item3 = new JMenuItem("Nova cirurgia");
+        //                menu.add(item3);
+        //                JMenuItem item4 = new JMenuItem("Nova consulta");
+        //                menu.add(item4);
+        //                menu.show(menu, evt.getX(), evt.getY()+75);
+        //
+        //            }
     }//GEN-LAST:event_jList1MouseClicked
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+        DefaultListModel ss = new DefaultListModel<>();
+
+        for (String a : teste) {
+            if (a.contains(jTextField1.getText())) {
+                ss.addElement(a);
+            }
+        }
+
+        jList1.setModel(ss);
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jList1ValueChanged
 
     /**
      * @param args the command line arguments
@@ -280,6 +374,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
