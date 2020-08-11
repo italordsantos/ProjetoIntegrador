@@ -5,8 +5,12 @@
  */
 package visao;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import javax.swing.Action;
 import javax.swing.DefaultListModel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -58,8 +62,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jRadioButton2 = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -74,6 +76,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,10 +109,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jList1);
-
-        jLabel1.setText("jLabel1");
-
-        jButton1.setText("jButton1");
 
         jMenu1.setText("Animal");
 
@@ -188,22 +187,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jRadioButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton2))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(125, 125, 125)
-                        .addComponent(jLabel1)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButton1)))
+                        .addGap(10, 10, 10)
+                        .addComponent(jRadioButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton2))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -217,11 +209,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(jRadioButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton1))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         pack();
@@ -267,7 +255,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             if (jRadioButton1.isSelected()) {
                 Animal a = new Animal();
-                a.setAlgo(jList1.getSelectedValue());
+                a.setAlgo(jList1.getSelectedValue(),
+                        jList1.getSelectedIndex());
                 a.setVisible(true);
             } else {
                 new Proprietario().setVisible(true);
@@ -275,49 +264,42 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         if (evt.getButton() == MouseEvent.BUTTON3
                 && !jList1.isSelectionEmpty()) {
-            System.out.println("karol S2");
+
             JPopupMenu menu = new JPopupMenu();
             add(menu);
 
-            JPopupMenu menu1 = new JPopupMenu();
-            add(menu1);
-
             JMenuItem item = new JMenuItem("Informações");
             menu.add(item);
-            menu.add(menu1);
+            System.out.println("entrou");
+            item.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Animal a = new Animal();
+                    a.setAlgo(jList1.getSelectedValue(),
+                            jList1.getSelectedIndex());
+                    a.setVisible(true);
+                }
+            });
+            System.out.println("entrou novamente");
+
             JMenuItem item2 = new JMenuItem("Nova vacina");
             menu.add(item2);
+
             JMenuItem item3 = new JMenuItem("Nova cirurgia");
             menu.add(item3);
+
             JMenuItem item4 = new JMenuItem("Nova consulta");
             menu.add(item4);
-            menu.show(menu, evt.getX(), evt.getY() + 75);
+
             menu.addSeparator();
             JMenu subMenu = new JMenu("Sub menu");
             subMenu.add(new JMenuItem("Sub 1"));
             subMenu.add(new JMenuItem("Sub 2"));
             menu.add(subMenu);
 
+            menu.show(this, evt.getX(), evt.getY() + 75);
         }
-        //        if ((evt.getModifiers() & MouseEvent.BUTTON3_MASK) != 0) {
-        //                JPopupMenu menu = new JPopupMenu();
-        //                add(menu);
-        //                
-        //                JPopupMenu menu1 = new JPopupMenu();
-        //                add(menu1);
-        //                
-        //                JMenuItem item = new JMenuItem("Informações");
-        //                menu.add(item);
-        //                menu.add(menu1);
-        //                JMenuItem item2 = new JMenuItem("Nova vacina");
-        //                menu.add(item2);
-        //                JMenuItem item3 = new JMenuItem("Nova cirurgia");
-        //                menu.add(item3);
-        //                JMenuItem item4 = new JMenuItem("Nova consulta");
-        //                menu.add(item4);
-        //                menu.show(menu, evt.getX(), evt.getY()+75);
-        //
-        //            }
+
     }//GEN-LAST:event_jList1MouseClicked
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
@@ -374,8 +356,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
